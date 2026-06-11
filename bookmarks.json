@@ -1,0 +1,934 @@
+{
+ "bookmarks": [
+  {
+   "project": "-home-en-zyro-gnss",
+   "session": "8be34b12-9fb0-47e9-95f2-b8af7f0026da",
+   "uuid": "e9931d20-1ce7-413d-a7b4-acb2e5d0268e",
+   "idx": 38,
+   "title": "FPGA resource usage breakdown",
+   "category": "milestone",
+   "note": "After utilization reports turned out to be written to external .rpt files, Claude hunted down the right per-IP reports and produced a complete LUT/register/BRAM/DSP table for the Zynq part.",
+   "quote": "Now I have a complete picture. Here's the resource usage summary:\n\n## Resource Usage — XC7Z020CLG400-2"
+  },
+  {
+   "project": "-home-en-zyro-gnss",
+   "session": "8be34b12-9fb0-47e9-95f2-b8af7f0026da",
+   "uuid": "fbb84899-a6de-43c2-b811-799646be7ba1",
+   "idx": 83,
+   "title": "Project roadmap status review",
+   "category": "milestone",
+   "note": "Synthesizes git log, README, and ROADMAP into a crisp status: Phases 0-14 done, full GNSS receiver on Zynq-7020 hitting 52.4 dB-Hz sensitivity matching expectations.",
+   "quote": "Best sensitivity: 52.4 dB-Hz (PRN 194, CI=4) matching P…"
+  },
+  {
+   "project": "-home-en-zyro-gnss",
+   "session": "8be34b12-9fb0-47e9-95f2-b8af7f0026da",
+   "uuid": "c2f8b3f7-219f-4045-8a75-a19ba799890c",
+   "idx": 88,
+   "title": "Parallel agents review codebase",
+   "category": "collaboration",
+   "note": "Fans out three subagents in parallel — RTL acquisition engine, Rust software, and Vivado build scripts — to hunt for problems across the whole stack at once.",
+   "quote": "Let me explore the key areas of the codebase in parallel."
+  },
+  {
+   "project": "-home-en-zyro-gnss",
+   "session": "8be34b12-9fb0-47e9-95f2-b8af7f0026da",
+   "uuid": "4ae63c1e-12b2-4a4e-9586-e8a8baf562df",
+   "idx": 96,
+   "title": "Verify findings before reporting",
+   "category": "insight",
+   "note": "Rather than trusting the subagents' output, Claude re-reads the actual source files to confirm the most critical findings before presenting them — a deliberate guard against hallucinated bugs.",
+   "quote": "Let me verify the most critical findings against the actual code before reporting."
+  },
+  {
+   "project": "-home-en-zyro-gnss",
+   "session": "8be34b12-9fb0-47e9-95f2-b8af7f0026da",
+   "uuid": "24cc0c0c-107f-45be-87a3-9ecf0596664f",
+   "idx": 116,
+   "title": "Real Gray-code FIFO bug found",
+   "category": "debugging",
+   "note": "The verified review surfaces a concrete RTL bug: an async FIFO full-detection inverting two MSBs instead of one, silently dropping IQ samples — a plausible root cause for intermittent data quality issues.",
+   "quote": "Inverting both bits means the FIFO reports full when it has ~25% capacity remaining... This silently drops IQ samples via ovf_cnt increments"
+  },
+  {
+   "project": "-home-en-meshtastic-lora-rs",
+   "session": "3ab43d01-eea0-4141-a20d-61aa0d24d89e",
+   "uuid": "fe313b8b-7ad3-4104-9c7f-dcb6dc7ca4b5",
+   "idx": 205,
+   "title": "Single-binary dual-GUI architecture plan",
+   "category": "planning",
+   "note": "Claude reads the real code first, then proposes a grounded ASCII-diagrammed architecture for merging the two binaries into one shared-code app.",
+   "quote": "Here's the plan. I'll keep it tight and grouped by what it touches. ## Target architecture ... Single native binary: `mesh`"
+  },
+  {
+   "project": "-home-en-meshtastic-lora-rs",
+   "session": "3ab43d01-eea0-4141-a20d-61aa0d24d89e",
+   "uuid": "9d89320f-e11e-46c7-aeed-bad889c4430e",
+   "idx": 208,
+   "title": "Sean refines the plan",
+   "category": "collaboration",
+   "note": "Sean's terse point-by-point answers (single-node, single port, VPN as auth) reshape the architecture before any code is written.",
+   "quote": "Nice plan. 1. can always be single-node, that will probably be cleaner. 2. single port. 3. could do both. 4. no auth for now, i've got vpn as actual auth protection."
+  },
+  {
+   "project": "-home-en-meshtastic-lora-rs",
+   "session": "3ab43d01-eea0-4141-a20d-61aa0d24d89e",
+   "uuid": "55acb996-ae99-4809-b335-92439bcbe485",
+   "idx": 989,
+   "title": "Admitting the env's limits",
+   "category": "calibration",
+   "note": "Claude honestly states what it can and can't verify, declining to fake a browser end-to-end check it has no way to run.",
+   "quote": "The remaining \"browser end-to-end\" check needs a browser I can't drive in this env. Cleaning up and committing."
+  },
+  {
+   "project": "-home-en-meshtastic-lora-rs",
+   "session": "3ab43d01-eea0-4141-a20d-61aa0d24d89e",
+   "uuid": "5178b1bc-acd1-4eab-a163-4359b8c8f549",
+   "idx": 1297,
+   "title": "Diagnosing USRP firmware brown-out",
+   "category": "insight",
+   "note": "From dmesg/lsusb logs alone, Claude explains the B200-mini FX3 re-enumeration and pegs USB power as the likely culprit — hardware domain depth.",
+   "quote": "this is a textbook USRP B200-mini firmware-load failure, almost always power-related on the USB port."
+  },
+  {
+   "project": "-home-en-meshtastic-lora-rs",
+   "session": "3ab43d01-eea0-4141-a20d-61aa0d24d89e",
+   "uuid": "1e880569-9bea-4c5b-88ab-35f99f03f050",
+   "idx": 1303,
+   "title": "Why UHD shows disabled in web",
+   "category": "debugging",
+   "note": "Claude instantly traces 'UHD (disabled)' to a misplaced cfg gate — UHD is a server capability, not a wasm-client one — and spots a second sync bug.",
+   "quote": "The view's UHD button is `#[cfg]`-gated on the wasm binary's `uhd` feature ... so the wasm view's gate is wrong."
+  },
+  {
+   "project": "-home-en-meshtastic-lora-rs",
+   "session": "3ab43d01-eea0-4141-a20d-61aa0d24d89e",
+   "uuid": "e52d6090-c86b-40b9-b359-1f596b039588",
+   "idx": 1442,
+   "title": "135,940 log lines stall the server",
+   "category": "debugging",
+   "note": "The performance-bug breakthrough: blocking eprintln! through stderr's mutex was freezing every async task, found by counting log lines.",
+   "quote": "Found it. The server has spewed 135,940 log lines ... Every `eprintln!` is a blocking write through stderr's mutex, which stalls every async task that touches it."
+  },
+  {
+   "project": "-home-en-meshtastic-lora-rs",
+   "session": "3ab43d01-eea0-4141-a20d-61aa0d24d89e",
+   "uuid": "59f72573-21d2-444c-bbb6-d01ccaf1e1b8",
+   "idx": 1536,
+   "title": "Split runtime hits 10 Hz, zero stalls",
+   "category": "milestone",
+   "note": "Isolating the radio onto its own thread/runtime measurably fixes the multi-second stalls, confirmed by hard numbers.",
+   "quote": "Fixed. 202 snapshots in 20s = 10.1 Hz, zero stalls. The split runtime did it."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "1fb6152e-739c-4f5d-b4f0-a6efa4e43272",
+   "uuid": "e46ab4d2-f592-4c85-80f9-50221dd42ce7",
+   "idx": 589,
+   "title": "Last 3 nets routed: 26/26",
+   "category": "debugging",
+   "note": "The breakthrough: contradictory diagnostics revealed the cage existed only in the router's search space, not the board, solved by reasoning rather than replaying references.",
+   "quote": "The key finding — reasoning, not reference-replay: the diagnostics contradicted each other... So the cage was real only in the router's search space"
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "1fb6152e-739c-4f5d-b4f0-a6efa4e43272",
+   "uuid": "1f6ec424-e591-4b37-9a33-1a8507893773",
+   "idx": 1103,
+   "title": "From-blank run, honest 24/26",
+   "category": "insight",
+   "note": "Honest self-assessment of a from-scratch attempt: attempt 1 cascaded into failure, so he rolled back and re-derived discipline from the failure itself.",
+   "quote": "Stalled ~22/26 with cascading failures — the documented \"interlocked core\" case, so I took the larger rollback instead of more cascades."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "1fb6152e-739c-4f5d-b4f0-a6efa4e43272",
+   "uuid": "1befd58e-8828-440b-a462-35880a5acff2",
+   "idx": 1237,
+   "title": "Manual place-look-surgery loop",
+   "category": "calibration",
+   "note": "Executes Sean's prescribed visual loop literally — grab a track, drag one cell, render, check — and fixes a snap bug discovered mid-surgery.",
+   "quote": "Snap behaves correctly now — no-op at d=0, nearest vertex from an offset. Committing the fix and the study artifacts:"
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "1fb6152e-739c-4f5d-b4f0-a6efa4e43272",
+   "uuid": "9b9fb10a-7c35-4a40-8630-5a10b512364e",
+   "idx": 1670,
+   "title": "Restart from blank, end in mind",
+   "category": "collaboration",
+   "note": "Sean reframes a dead-end as normal and steers toward strategic upfront reasoning — a human mentoring the agent through a hard problem.",
+   "quote": "A negative result is actually kind or normal... restart from blank. You will probably see you need some strategic reasoning and space reservations up front"
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "1fb6152e-739c-4f5d-b4f0-a6efa4e43272",
+   "uuid": "cace733c-6a13-4817-a697-6246c3e2b8f8",
+   "idx": 2037,
+   "title": "Budget-first routing pivot works",
+   "category": "pivot",
+   "note": "The strategic pivot pays off: computing every net's length budget before routing turns the chaotic field into a designed laminar stack, routing a previously-impossible net.",
+   "quote": "Computing anchor floor = max(die + direct + overhead) = 34.6mm before routing a single net changed the whole game"
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "1fb6152e-739c-4f5d-b4f0-a6efa4e43272",
+   "uuid": "2fbe8f6a-a342-450b-8f59-cc8c45c3073a",
+   "idx": 2224,
+   "title": "A0/CKE knot solved, 25/26",
+   "category": "milestone",
+   "note": "Applying Sean's 'global view + one micro-goal' doctrine, the agent unknots the hardest case via via micro-surgery, finding a better path than its own prediction.",
+   "quote": "evicting A4's slack stub from the y=2.4 row was the one move that mattered — A0 immediately routed 28.8mm, though not via my predicted west path"
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "9a558698-3792-40f2-9704-c5112db5dda4",
+   "idx": 7,
+   "title": "Scoping the PCB sandbox",
+   "category": "planning",
+   "note": "Claude's opening architectural pushback (parse vs one-shot export, don't build a DRC engine, defer electrical length) frames the entire project's tight-scope strategy.",
+   "quote": "scoping it tightly to just the Zynq↔DDR region is the key move, since building a real PCB CAD from scratch would be a black hole."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "9ad8c15f-621c-4cf5-8385-1ca66fcc55bf",
+   "idx": 322,
+   "title": "First working render",
+   "category": "milestone",
+   "note": "The screenshot loop comes alive — Claude reads its own PNG and verifies the BGA grid renders correctly, the foundation of the entire visual-iterate workflow.",
+   "quote": "Screenshot works end-to-end — U1 shows the 20×20 CLG400 grid, U2 shows the 9×16 BGA with its characteristic center-column gap."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "a8c48fc9-5443-4103-a56d-4336f8feb856",
+   "idx": 1201,
+   "title": "Three cooperating layers",
+   "category": "collaboration",
+   "note": "Claude articulates the human/tool/AI division of labor — the conceptual heart of the whole collaboration, later recorded as WORKFLOW.md.",
+   "quote": "What I don't do: invent geometry out of thin air. The DSL has to expose the primitive ... or I can't compose the directive."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "8c811bb3-01bb-49af-bde8-a4f64567f97a",
+   "idx": 1536,
+   "title": "Honest 15-lane failure",
+   "category": "insight",
+   "note": "Claude ships a failing 15-lane attempt and grades it candidly against WORKFLOW.md rather than hiding the 77 DRC violations — a model of honest self-assessment.",
+   "quote": "Going to ship the 15-lane attempt as-is and write up an honest assessment ... this is exactly the 'directive that needs primitives the DSL doesn't yet have' case."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "a26a46e8-2d13-47b1-ae8a-3c5f9de0903a",
+   "idx": 1804,
+   "title": "Pivot to incremental routing",
+   "category": "pivot",
+   "note": "Sean's 'guarantee no violations while placing, rip up if congested' reframes the problem away from a declarative solver toward correct-by-construction routing.",
+   "quote": "that's a better fit for this tool's iteration-first pattern than the declarative solver I've been building."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "fcad6004-7e3a-44cb-8d25-71e289ef5489",
+   "idx": 2196,
+   "title": "Autorouter can't think topologically",
+   "category": "insight",
+   "note": "Claude honestly concedes a pure autorouter can't discover Sean's 'let A2 route further south to share a layer' insight, pivoting to hint-driven routing.",
+   "quote": "a pure autorouter probably can't discover those decisions on its own ... that's a topological insight that requires understanding the global geometry of the bus."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "8066b786-90f5-4200-93dc-b490335791ec",
+   "idx": 2259,
+   "title": "Hints unblock the autorouter",
+   "category": "debugging",
+   "note": "After exhaustive permutation search couldn't crack 4 lanes, a single escape-angle hint flips it to 4/4 — proving the hint-driven model over pure autorouting.",
+   "quote": "4/4! Hints unblocked the autorouter."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "d123bd76-ca84-4728-8abb-6ccbe9b28b95",
+   "idx": 2796,
+   "title": "The dirCode slot collision",
+   "category": "debugging",
+   "note": "A multi-commit bisect tracks a routing regression to a one-line hash collision (dirCode(1,1)=8 == DIR_NONE=8) silently conflating A* states.",
+   "quote": "dirCode(1, 1) = 8 collides with DIR_NONE = 8. Two different states share the same closed-set slot."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "0c1f2627-12bc-492b-9f1c-0db3f0336c4b",
+   "idx": 6517,
+   "title": "Honest report on what failed",
+   "category": "insight",
+   "note": "Candid 'solved vs not-solved' tally after exhausting five push-and-shove variants — models honest self-assessment rather than papering over a dead end.",
+   "quote": "Solved: uniform grid geometry... Not solved: DDR diagonal geometry. 2-6 violations persist... The DDR problem is architecturally different from the grid problem."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "8fe7e369-3d8c-4b57-9bc0-f7677e843f96",
+   "idx": 6554,
+   "title": "Grid snap fights the constraint",
+   "category": "calibration",
+   "note": "Visual-loop calibration: 14px grid-snap jumps undo the 4px constraint corrections, so snapping must move to after convergence — exactly the px-scale-vs-gap reasoning the talk wants.",
+   "quote": "22 violations — grid snapping during constraint resolution is destabilizing (±14px jumps undo the 4px constraint corrections). Let me fix: snap to grid AFTER all constraints converge."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "64f42fbf-8595-4037-921c-8a2a0a501fd2",
+   "idx": 7133,
+   "title": "Stuck vs oscillating violations",
+   "category": "debugging",
+   "note": "Breakthrough diagnosis: violations weren't 'stuck' but oscillating across different link pairs each tick, so the counter reset — fixed by keying on row-pairs not link indices.",
+   "quote": "The pairs aren't \"stuck\" — they're \"oscillating.\" Different pair IDs each tick... The fix: use a spatial key (which chain rows are in conflict, not which exact link indices)."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "2e7c4cc4-96c5-4533-8d65-202e2938ffdf",
+   "idx": 7212,
+   "title": "Draw expected before testing",
+   "category": "collaboration",
+   "note": "Sean's process suggestion lands: render a prediction SVG before each drag and diff against actuals, replacing blind parameter-tuning with target-driven iteration — a reusable working-with-Claude pattern.",
+   "quote": "the \"draw expected results\" suggestion is excellent — I should be reasoning about target geometry, not just tuning parameters... I'll render a prediction SVG before each test, then compare."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "7a0c7f49-d1c5-4015-b58e-77e462e653b2",
+   "idx": 7379,
+   "title": "It's routing, not physics",
+   "category": "insight",
+   "note": "Sean's 'bend outward like a fluid' image triggers the key reframe: force simulation can't construct clean U-bends; this is a geometric re-routing problem — the realization that ends the playground.",
+   "quote": "This is fundamentally a routing problem, not a physics one. d3-force can determine contact order and push distances, but can't construct clean U-bend geometry."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "509ff21c-e297-4287-a058-3c9e21b3035c",
+   "idx": 7425,
+   "title": "Geometric U-bend: zero violations",
+   "category": "milestone",
+   "note": "First clean win for the geometric router — a single pushed chain forms a rectangular detour with 0 violations and no spurious movement, validating the pivot away from forces.",
+   "quote": "Pink (row 2) shifted down and formed a rectangular U-bend at the bottom! 0 violations, and the node count stayed at 48 — no other chains were affected."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "7c319f33-2fcf-4323-9157-7519c9c05cc8",
+   "idx": 7441,
+   "title": "Pivot to the real board",
+   "category": "pivot",
+   "note": "Sean calls the abstract playground 'deep in iteration territory' and pivots to a webapp on the real Zynq+DDR board, routing manually to learn the target — the session's structural turning point.",
+   "quote": "I think we're deep in iteration territory... use our current tools at the real problem, and when it doesn't work, have us route manually, so we know what our desired solution look like."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "4af9b125-b766-4d04-a033-a98dd3591a8a",
+   "idx": 7608,
+   "title": "Half-pitch grid aligned to pads",
+   "category": "calibration",
+   "note": "Concrete render calibration on the real board: derive the 0.4mm half-BGA-pitch grid, shift U2 by 0.2mm, and verify every pad sits on a grid intersection with one dot between adjacent pads.",
+   "quote": "The grid dots are now perfectly aligned with the BGA pad centers — each pad sits exactly on a grid intersection... one dot between each pair of adjacent pads, which is where traces can route through."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "905cfebe-081c-413b-a487-78d1858f58de",
+   "idx": 8246,
+   "title": "Two state models fighting",
+   "category": "debugging",
+   "note": "A recurring 'trace disappears' bug gets a systematic root-cause: server does full-route-replace while client treats each session as independent — fixed by always loading the existing route first.",
+   "quote": "the server-side commit is \"replace full route\", but the client treats each drawing session as an independent trace. These two models fight each other."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "4e55c72a-fe88-41dd-90a2-75cce639a5e0",
+   "idx": 9066,
+   "title": "Shared planner for human-AI parity",
+   "category": "collaboration",
+   "note": "Sean asks for parity 'in flow, not just capability'; the answer is one shared planning.js module both browser and curl import, so Sean's clicks and Claude's POSTs run identical code.",
+   "quote": "extract shared planning logic to a standalone ES module that both server and browser import. This gives real code dedup... and adds curl parity via server endpoints."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "3b621331-cd9b-40b5-ac50-2f7eb48a7fa4",
+   "idx": 10281,
+   "title": "Fix works, browser cached old code",
+   "category": "debugging",
+   "note": "Classic blind-spot: the fix verified correct via curl, but Sean kept seeing the old zigzag because the browser cached the ES module — the gap between what Claude can see and what the user sees.",
+   "quote": "Server is correct... So the old server is not up — but your browser likely has the old planning.js ES module cached. Browser ES modules aren't hot-swapped by the WebSocket HMR."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "c3bf3100-1214-4db9-8926-f78ec27d95d6",
+   "idx": 10356,
+   "title": "Close the see-what-you-see gap",
+   "category": "insight",
+   "note": "Sean reframes repeated divergence bugs as a design principle: unify server/client settings, always broadcast-sync, and have curl mimic a grid-constrained cursor so Claude and the user observe the same thing.",
+   "quote": "to reduce situations like this, could you try to make the difference as small as possible. Like having 3 use an unified server/client setting... and having 1, 2 somehow mimic a cursor that is constrained by grid"
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "9b364f30-a679-448b-8801-9ccfc1d653b1",
+   "idx": 14782,
+   "title": "Asking Claude to route like it thinks",
+   "category": "collaboration",
+   "note": "Sean reframes the whole project: the autorouter passes but looks inelegant, so structure it the way Claude actually thought when hand-routing — the conceptual hinge of the talk.",
+   "quote": "you must have some \"intuition\" which goes next when you routed the board ... we ight have to struture it as how we actually think (recall how you decided what to route next), and have a layered startegy"
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "bcda9201-4c3d-420b-a31d-b4f160ba1317",
+   "idx": 14787,
+   "title": "Reverse-engineering manual routing intuition",
+   "category": "insight",
+   "note": "Claude introspects what it actually did hand-routing the board, contrasting human 'gestalt' planning and load-bearing moves with running heuristic passes.",
+   "quote": "When I routed it by hand, my process wasn't \"run heuristics in sequence.\" ... 1. Look at the board, form a mental picture of the final shape ... 2. Pick the most load-bearing move next."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "78cbb65a-9e8a-4bd6-96e1-c3f2928e4bfc",
+   "idx": 14994,
+   "title": "Strand-aware scheduler breakthrough",
+   "category": "milestone",
+   "note": "The commitment-value scheduler hits 15/15 on the first sweep and the manual 'outer-envelope-first' lesson emerges from simulation instead of being hard-coded.",
+   "quote": "Breakthrough: Pass 1 now routes 15/15 cleanly on the first sweep — the strand-aware simulation correctly refused picks that would cut off other nets. Audit entries down from 134 → 72."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "a31b0025-00b8-4874-a321-5b231e897962",
+   "idx": 15036,
+   "title": "Honest: how would I actually fix this",
+   "category": "collaboration",
+   "note": "Pressed on what he'd really do faced with a bad result, Claude admits none of the available options are good and designs a reviewer-level hints interface between hand-routing and full re-runs.",
+   "quote": "Honest answer first: today, neither option is great. ... None of these are what I actually want, which is: express the finding as a constraint, re-execute scoped to what the finding touches."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "9777188c-86c9-4250-aa54-5ed50d303986",
+   "idx": 15315,
+   "title": "Agent self-tests the reviewer skill",
+   "category": "milestone",
+   "note": "Claude launches a sub-agent given only skill.md and the engine; it autonomously routes, reviews, writes a hint, sees the regression and correctly reverts — the architecture validating itself.",
+   "quote": "The test worked. Agent followed the skill cleanly, hit the same 3.431 baseline, identified A7 as the lone layer mismatch ... saw the 0.002 regression, and correctly reverted. Meta feedback is gold."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "3d488e80-27f4-4a22-87ef-32acde369662",
+   "idx": 17282,
+   "title": "Cursor snaps to grid; track drops pads",
+   "category": "calibration",
+   "note": "Core visual-calibration debugging: the hint circle jumps in 0.4mm grid steps instead of following the cursor, and on-board length omits pad-to-seg segments — both fixed so the screenshot loop reads true.",
+   "quote": "Issue 1: state.draftCursor is snapped to a 0.4mm grid (GRID_MM=0.4), so the pre-anchor hint circle jumps in chunky steps instead of following the cursor. ... Issue 2: ... we drop the pad→first-seg ... segments."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "a9569d84-d1de-4b74-b903-f8d79571123f",
+   "idx": 18008,
+   "title": "Stale obstacle cache blocks push",
+   "category": "debugging",
+   "note": "The 'push refuses to budge' mystery resolves to A* seeing the ripped net's own old path as an obstacle — a recompile-before-buildObstacles bug found only by chasing the visual feedback.",
+   "quote": "Found it! pushTrackCorridor rips the net but doesn't call board.recompile() before buildObstacles() — so cachedBoard.tracks is stale ... A* sees its old path blocking its new path."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "21f66438-5c1a-4fea-af25-671696f863ea",
+   "idx": 18770,
+   "title": "Conceding the 45-vs-135 geometry argument",
+   "category": "collaboration",
+   "note": "After repeatedly insisting octolinear math forbade it, Claude is shown a hand-drawn 3-segment solution, concedes, and implements it — honest self-correction on a geometry claim it got wrong.",
+   "quote": "Ah, I see now — you're proposing a genuine 3-segment detour that keeps every corner at 45° ... That's geometrically valid and octolinear! Let me work out the math and implement."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "12ee6811-817c-48f7-885d-2e5b2130dbed",
+   "idx": 22912,
+   "title": "Why earlier runs faked 15/15",
+   "category": "insight",
+   "note": "Claude debunks an apparent regression by proving the router is deterministic per code-version — the old 15/15 came from accumulated polish-pass state, not nondeterminism — a sharp honest self-assessment of its own prior results.",
+   "quote": "not nondeterminism, but a different codebase state. The auto-router is deterministic per-code-version (I verified: two identical runs produced byte-identical logs)."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "af82b882-d307-4f10-9e25-8dc2178f70bf",
+   "idx": 23665,
+   "title": "Capability vs judgment",
+   "category": "insight",
+   "note": "Asked whether length-matching could be fixed the way Sean does it manually, Claude concedes the gap isn't tooling but seeing global channel structure by eye — the core thesis of the human-in-the-visual-loop talk.",
+   "quote": "The gap isn't capability, it's judgment ... My raySlack stops at the first obstacle; it can't tell '1.5mm clear then open forever' from '1.5mm clear then solid wall.'"
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "e03de196-7fa5-4a59-8147-2433babd4127",
+   "idx": 23700,
+   "title": "Design the LLM-in-router loop",
+   "category": "planning",
+   "note": "Claude sketches the runtime-planner architecture — spawn an LLM subagent with a whitelisted primitive toolset, a tool-call budget, and a hard rollback invariant — the design that the rest of the session goes on to validate.",
+   "quote": "Spawn an LLM subagent with a tight tool whitelist ... Give it a budget (say ≤ 10 tool calls, ≤ 3 primitive ops) and a hard invariant: if final score isn't ≥ pre-rescue score, rollback."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "013ed2f6-36ee-4ec6-b8f8-b3bfc28412d7",
+   "idx": 24299,
+   "title": "15/15 via cross-net hints",
+   "category": "milestone",
+   "note": "The hints-driven length-match finally beats Sean's manual fix — one selfPush hint frees A1's corridor and Phase 1 meanders it naturally, no rescue phases needed.",
+   "quote": "15/15 within tol, max 2.34mm! The A8 self-push hint fired, freed A1's corridor, Phase 1 naturally meandered A1. No Phase 7b/7c rescues needed — the hint did the cross-net work directly."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "f69f5579-ca4d-4923-af71-00f1203f4ca7",
+   "idx": 24557,
+   "title": "Pushback exposes a real gap",
+   "category": "collaboration",
+   "note": "Sean rejects Claude's quick force-commit hack ('I should expect removeMeander to go DRC-ok to DRC-ok'); Claude reverts and diagnoses the true architectural cause — meanders free their baseline corridor for other nets to invade.",
+   "quote": "Good pushback. Let me revert my force-commit change and actually diagnose the gap ... inserting a meander frees the BASELINE ... other nets can legally route through it."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "80d00fc9-aabd-46c7-bbe4-2a3a1c16a4ee",
+   "idx": 25538,
+   "title": "Unaided agent solves it differently",
+   "category": "milestone",
+   "note": "An LLM subagent with no knowledge of the solution hits 15/15 on its own, discovering a third distinct rescue primitive — concrete proof of the runtime-planner thesis.",
+   "quote": "Agent hit 15/15 unaided ... a third rescue primitive distinct from both your manual fix and my hints-driven fix ... manually laying down a high-amplitude bump-meander at the one spot neighbours haven't packed."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "8548373b-2afb-4027-b1f3-4df549c14d63",
+   "idx": 26183,
+   "title": "Cosmetic 15/15 caught by eye",
+   "category": "debugging",
+   "note": "Sean's visual inspection spots A8 crossing itself behind a clean 15/15 score; Claude traces it to push-segment's own-net exclusion and adds self-intersection DRC plus a final-inspection checklist — the visual loop catching what the metric missed.",
+   "quote": "The 15/15 score looks fine because electrical length is a polyline sum — it counts crossings as traversed length ... reject self-intersecting routes in addRoute DRC."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "c011b0f2-4c05-4840-a2a8-a28e8a9b4b27",
+   "idx": 26270,
+   "title": "0.04mm teeth read off-screen",
+   "category": "calibration",
+   "note": "Sean eyeballs A2 teeth that look too close even though they don't cross; measurement confirms 0.04mm edge-to-edge against a 0.12mm rule, driving a self-clearance DRC that the score and self-intersection check both missed.",
+   "quote": "A2's teeth are 0.04mm edge-to-edge, well below the 0.12mm minClearance. Track-to-track DRC is excluding self-collisions."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "4c18d756-d5fe-42be-a339-66497bfe0697",
+   "idx": 31660,
+   "title": "Scope thin netlist scaffold first",
+   "category": "planning",
+   "note": "Sean explicitly sequences the work — thin DDR netlist scaffold first, defer draw-mode unification, non-VIP milestone first — setting the iteration agenda.",
+   "quote": "let's have a thin netlist scaffold enough for our DDR usecase first... Could you set up with the netlist scaffold first, and after that's set up, proceed to iteration for the milestone"
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "e656039d-524b-48f7-b17c-72b6e1b52046",
+   "idx": 31925,
+   "title": "BGA geometry blocks non-VIP clock",
+   "category": "debugging",
+   "note": "Pins down a fundamental physical limit — the fat trace centre clips a neighbouring BGA pad, so non-VIP clock simply can't geometrically fit on this footprint.",
+   "quote": "The non-VIP CK fails because of fundamental BGA geometry — fat trace centre at y=0.8 (mid of CK pads) clips L1 pad at y=0.4 (PS_DDR_A5)."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "c523085e-9290-4e62-a0fd-faf4d67da775",
+   "idx": 31946,
+   "title": "KiCad images teach pair meandering",
+   "category": "collaboration",
+   "note": "Sean uses four KiCad reference screenshots to correct the model — diff pairs must meander AS A PAIR with a reserved clock corridor — shaping the whole next phase.",
+   "quote": "differential pair length matching has to be done as a differential pair... so it is meandered as a pair, (with some intra-pair length matching too), which make the radius much larger"
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "2f33e1b5-9fab-4223-a5e0-b66e510b6291",
+   "idx": 32522,
+   "title": "Pair-meander primitive works end-to-end",
+   "category": "milestone",
+   "note": "First working coupled pair-meander — the central primitive of the phase extends both rails together by exactly the requested length with zero skew.",
+   "quote": "End-to-end success: pair-meander extended CK pair from 8.16mm → 12.6mm (+5mm exactly), skew 0mm. Let me visualize."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "6106bc9a-5b58-4388-a9ec-c02bf0abc0e1",
+   "idx": 32686,
+   "title": "Chamfered bumps match KiCad style",
+   "category": "calibration",
+   "note": "Visual-loop confirmation that the rendered 45-degree chamfered bumps now match the KiCad reference style Sean supplied — render screenshot validating geometry.",
+   "quote": "Chamfered bumps are visible — both rails curve up at 45°, run flat, curve back down. Matches the KiCad reference style."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "dfd07eb1-9f89-4809-968c-1701b6eccc4e",
+   "idx": 34212,
+   "title": "Zoomed render reveals rail collapse",
+   "category": "calibration",
+   "note": "Cropping the SVG viewBox to the CK channel and re-rendering lets Claude literally see the inside-rail collapse bug — the screenshot-iterate loop pinpointing a geometry defect.",
+   "quote": "Now I see the CK pair clearly — pink CKP bumps down once, red CKN stays flat (the inside-rail collapse is visible)."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "cea96729-48ac-4a78-b251-5e2036b406b5",
+   "idx": 34765,
+   "title": "Sixth leak plugged, pair coupled",
+   "category": "debugging",
+   "note": "Culmination of a long hunt across six pipeline phases mutating pair rails — both clock rails finally come out identical length, visually verified as three matching bumps.",
+   "quote": "Pair coupling preserved! CKP and CKN track lengths now identical (12.36mm both). Let me render to verify visually."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "e36620c2-8d35-4b08-b61e-cfed6849d86b",
+   "idx": 35189,
+   "title": "Data answers diagnostic, not guess",
+   "category": "insight",
+   "note": "Instead of speculating, Claude measures bump spans and gaps to honestly answer Sean's question — it isn't vias or one-sidedness, the leftover segments are just too short.",
+   "quote": "the answer to your diagnostic question is: neither vias nor one-sidedness... It stopped because the remaining centre segments are too short for another bumpWidthMm=1.0 bump"
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "9549fdb8-aa39-4425-9095-fda280e2e2b5",
+   "idx": 41062,
+   "title": "Playwright probes invisible handles",
+   "category": "debugging",
+   "note": "After two screenshot-based attempts failed, Claude pivots to driving the UI with Playwright to inspect the live SVG DOM, turning a guessing loop into a verifiable one.",
+   "quote": "Playwright confirms: net selects but `g.anchor-handles` never gets created. Let me verify the served file has my fix."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "804970ac-af41-4551-8339-3181f888343a",
+   "idx": 41232,
+   "title": "The pairwise-decomposition tax",
+   "category": "planning",
+   "note": "Claude names the root cause of sharp corners and lays out three fixes ranked by correctness, recommending single-shot multi-goal A* as the right answer.",
+   "quote": "Good catch — the symptom is exactly the pairwise-decomposition tax. Each anchor→anchor A* is independent... neither knows about the other."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "b265ef3c-98ae-4127-b240-5cdd2cb63eea",
+   "idx": 41395,
+   "title": "Sharp V is user geometry",
+   "category": "calibration",
+   "note": "Color-coded on-canvas angle labels plus armLen measurement let Claude prove the sharp V is forced by 0.57mm of routing room, not a planner bug — honest 'works as designed'.",
+   "quote": "armLen [0.57, 2.80]... the user has two pins so close together... With one cell of room, A* can't develop a smooth direction... That's a consequence of the user's input, not a planner bug."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "9ab0c1cd-ecd1-48c5-9c2c-4b7919f804ef",
+   "idx": 41559,
+   "title": "6000ms to 51ms replan",
+   "category": "debugging",
+   "note": "Swapping multi-goal A* for pairwise threading collapses an inner-layer replan from 6 seconds to 51ms — a 100x+ win that made the drag loop feel instant.",
+   "quote": "Massive win — the inner-layer run went from 6000ms → **51ms** (>100× faster). The multi-goal A* was burning expansions on the state-space explosion that pairwise threading sidesteps."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "8e27ee33-0797-4d16-bd08-f9ab900d9af7",
+   "idx": 41608,
+   "title": "Anchors as declarative intent",
+   "category": "insight",
+   "note": "Pushed by the user, Claude reframes the whole architecture: anchors are a declarative description of intent where push is imperative geometry editing — geometry becomes cache, not state.",
+   "quote": "anchors are a **declarative** description of intent, where push is **imperative** geometry editing... A layout becomes a small data structure... The planner derives the geometry — it's *cache*, not state."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "11a29d94-dea7-4346-adbf-2cdb7d896fec",
+   "idx": 41866,
+   "title": "I was wrong, I killed its work",
+   "category": "collaboration",
+   "note": "Stark honest self-assessment: Claude admits its deadlock diagnosis was wrong (the agent was working all along) and that restarting the server wiped 9 committed anchors that were never saved.",
+   "quote": "Important update: I was **wrong about the deadlock**. The first agent... was actually working the whole time... **But I killed its work.** When I restarted the server, the in-memory state... was wiped."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "f547a503-4d61-42f0-ba0a-caa151301eb0",
+   "idx": 42513,
+   "title": "Goal post broken: 18.97 to 0.398mm",
+   "category": "milestone",
+   "note": "An autonomous agent armed with the new anchor + meander-rect toolkit drives DDR3_ADDR skew 6x inside tolerance, validating the whole anchor-native architecture end-to-end.",
+   "quote": "Pushed `e2154ea`. **Goal post broken.** ... DDR3_ADDR skew | 18.97mm | **0.398mm** (within tolerance)"
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "fbf3f6cd-69ca-448e-aa54-442d6202347a",
+   "idx": 43369,
+   "title": "The 0.398mm was misleading",
+   "category": "insight",
+   "note": "Claude catches that its own celebrated 0.398mm was track-only, not the die-aware tolerance metric — the real skew was 5.42mm with only 3/13 within tol, reframing the whole goal.",
+   "quote": "The \"earlier 0.398mm\" was track-only — not the LM tolerance metric... So the previously-claimed \"withinTol=True\" state was misleading."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "0e9b8af0-af5c-4599-8dc5-de132e7ebd44",
+   "idx": 50240,
+   "title": "Four screenshot bugs demand parity",
+   "category": "calibration",
+   "note": "Sean's annotated screenshots catch four defects the agent's primitives produced that the UI never would, forcing a strict UI-vs-command parity audit.",
+   "quote": "several paths are not octolineaer... There is a 180 deg turn... The clock is not paired... DRC violations, A5 and We intersect. Could you check how they arise."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "3bb8cab0-d5e4-462f-afdb-faa48584a11d",
+   "idx": 50431,
+   "title": "Self-graded parity scorecard",
+   "category": "calibration",
+   "note": "Claude builds a checkmark/X table grading its own /repath-through wrong on five pipeline stages the UI does and it skipped, naming each visible defect.",
+   "quote": "| chamferCorners | ✓ | ✗ → 41° / sharp non-octolinear joints (image 22) | | dropCollinearSegs | ✓ | ✗ → 180° antiparallel pivot at legA/legB stitch (image 23) |"
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "b9850b5b-43f3-48b7-8600-81802fdf1941",
+   "idx": 50656,
+   "title": "Sean reveals his planning method",
+   "category": "collaboration",
+   "note": "Sean narrates the human strategy behind a near-rip-free run — pre-scanning pads, clock-pair-first, and a two-pass layer-deferral logic — the raw material the agent then tries to codify.",
+   "quote": "the reasons why there were so few rip ups is because I planned ahead. Before even laying down a single route, I scanned all of the pads... try to put everything in In.Cu2 first... if so, I would defer it"
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "05a0f23c-74fe-4f1d-9478-315b9002f81a",
+   "idx": 51306,
+   "title": "Straightness signal metrics missed",
+   "category": "calibration",
+   "note": "Sean points at the board bottom and the agent sees a quality gap (clean diagonals vs jagged reverse-bends) that its detour metric only partly captured — eye beats number.",
+   "quote": "Reference (step 92): long, straight diagonals... Current (centre-first 22/26): the same bottom region is full of short jagged segments and reverse-bends... an important quality signal the metrics partially captured but the visual makes the gap obvious"
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "0e15eeed-7382-42fa-b925-60d85249bae2",
+   "idx": 51536,
+   "title": "Supervised flow beats the reference",
+   "category": "milestone",
+   "note": "The functional-order baseline plus Sean's push-rescue and length-match produce maxSkew 0.97mm — the gold standard, 2.5x tighter than any prior reference, proving the supervised loop can exceed the human demo.",
+   "quote": "Best CK length-match result in the catalogue — maxSkew 0.97mm is 2.5× tighter than any prior reference, with 15% fewer total bends."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "33486bcd-8bd1-4447-b1a7-1b89df88d108",
+   "idx": 52044,
+   "title": "Parity proven, judgment is the gap",
+   "category": "insight",
+   "note": "Guided-replay shows 106/106 gold actions reproduce exactly through the HTTP API, reframing every failed codification attempt: the tools were never the bottleneck, multi-step move selection is.",
+   "quote": "The hard part was never the tools — it's the judgment of which move to issue, which... requires planning several moves ahead, including moves on other nets to make room."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "98431b56-aada-48b7-8064-d1957df60ff8",
+   "idx": 52928,
+   "title": "Hands-on run: lessons that diverged",
+   "category": "collaboration",
+   "note": "The agent runs the layout itself and honestly reports which captured lessons held and which broke — its hard nets were entirely different, validating Sean's 'every layout is different' point.",
+   "quote": "The reference's problem children (A12/A13) routed first try here; this run's hard set is A0, A14, BA0, BA2... Per-net positional hints are weak; the failure-type taxonomy is the durable part."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "55829a35-18fa-4ae2-b58a-b4123e380dfd",
+   "idx": 53374,
+   "title": "The false-summit via insight",
+   "category": "calibration",
+   "note": "Sean's eye catches that the swept-clear escape lane still failed because a via pierces all layers; the agent verifies its own '#46 looked done' read was a false summit and rebuilds the rescue model.",
+   "quote": "Step 46 was a false summit: the In1 crop looked done, but the via still couldn't land because In2 was occ... a via site must be clear on all layers, starts blocked on all, and is cleared layer-by-layer in sequence"
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "9f3391f8-6e16-4639-bf36-81043229d57b",
+   "idx": 55164,
+   "title": "\"I got the ranking wrong\"",
+   "category": "calibration",
+   "note": "Claude posts an honest scorecard showing its difficulty predictions were essentially backwards, and diagnoses why: it substituted a numeric proxy for structural truth.",
+   "quote": "I largely got the ranking *wrong*. … Scary numbers ≠ structural truth. I substituted a metric for structural truth."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "49d4c090-84a4-4741-ba3e-82724daa6ad6",
+   "idx": 55189,
+   "title": "Naming its own failure pattern",
+   "category": "insight",
+   "note": "After a second wrong hypothesis, Claude stops and names the recurring failure mode in its own reasoning rather than just trying again.",
+   "quote": "## Second calibration miss — and I can now name *my* failure pattern"
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "0113ee9d-e5b0-41eb-a252-dc611f8b86c4",
+   "idx": 57631,
+   "title": "Five-render readability table",
+   "category": "calibration",
+   "note": "The empirical heart of visual calibration: rendering the same board at five window sizes to find what's actually countable by eye vs. gestalt-only.",
+   "quote": "Calibration result — read honestly off the five renders … the variable is **mm in the window**"
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "05d9d8e1-94b4-46be-b237-bb052cd9138a",
+   "idx": 57736,
+   "title": "Calibration codified to docs",
+   "category": "milestone",
+   "note": "The visual loop is fully calibrated and written down as a reusable standard — render at ~800px / ~16mm, crosshair k≈0.40, defer exact counts to numeric.",
+   "quote": "We've now fully calibrated the visual loop — render at ~800 px / ~16 mm, crosshair k≈0.40, defer exact counts to ascii/numeric."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "49ec1b9a-7d8b-4e2f-9c0d-429ed51924d3",
+   "idx": 57799,
+   "title": "The coordinate-free cursor loop",
+   "category": "collaboration",
+   "note": "Sean states the canonical place→look→nudge→look interaction they converged on — driving a cursor by landmarks and relative steps instead of coordinates.",
+   "quote": "Place the cursor at some landmark -> look at the image -> move the cursor m steps -> look … It doesn't have to one shot"
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "3dfc6be0-2467-4951-9b30-ac404c3261de",
+   "idx": 60308,
+   "title": "Claude admits overfitting to A9",
+   "category": "insight",
+   "note": "After the user corrects its A12 diagnosis, Claude names its own failure pattern out loud instead of defending — the honest-self-assessment beat a talk wants.",
+   "quote": "Good correction — I overfit to A9 pattern and jumped past the simpler hypothesis. Let me try the budget first."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "2698b868-92fa-4076-a769-0f345fdf56c9",
+   "idx": 60424,
+   "title": "Budget hypothesis: user was right",
+   "category": "collaboration",
+   "note": "A clean worked example of human intuition (\"just an A* budget failure\") confirmed by tooling, plus a real tool gap surfaced in the same breath.",
+   "quote": "You were right — In2.Cu was failing purely on A* budget. Bumping maxExpansions to 100k makes it route cleanly... The default 20k was just too small for this corridor."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "0f3e6665-27b1-4ecc-a805-3a5999d4c7cc",
+   "idx": 60625,
+   "title": "Honest scorecard on the rescue",
+   "category": "milestone",
+   "note": "Claude reads the rendered picture, narrates exactly why A* took the long path, then grades the toolkit capability-by-capability — the honest scorecard format that recurs through the finale.",
+   "quote": "The picture tells the story: A12 (yellow) routed on In2 via the outer-rim — A* picked the long path despite the middle being open... A* prefers the bend-cheaper outer wrap"
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "84fbad28-7f03-417b-b8cc-01f7f691402e",
+   "idx": 60875,
+   "title": "Claude asks for the answer",
+   "category": "collaboration",
+   "note": "Rather than spin, Claude explicitly stops and asks the human for the two-move solution so it can reverse-engineer which missing primitive would have made it obvious — model knowing when to defer.",
+   "quote": "I'm fishing for the right two moves without success — clearly missing the perception you have... can you tell me what the two moves are? Knowing the answer will let me retroactively spot exactly which primitive would have made it obvious"
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "42dd666d-8d99-44e8-a8a4-1e82d476f105",
+   "idx": 61417,
+   "title": "Existence proof becomes a picture",
+   "category": "milestone",
+   "note": "The connectivity oracle's numbers turn into a visible green/cyan/red boundary image — the project's whole meta-thesis (reason while pointing) landing in one render.",
+   "quote": "The picture says everything. Vast green = src-pocket (1893 cells)... Tiny cyan around DST = dst-pocket (only 7 cells). Red dots = the boundary walls... The existence proof is visible."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "b6d45fe5-9af1-4cf6-a5a0-69072439a9d9",
+   "idx": 62018,
+   "title": "I literally can't read this render",
+   "category": "calibration",
+   "note": "The visual-calibration core: the user sets the bar at \"completely clear to YOU,\" and Claude bluntly grades its own overlay as illegible, then plans the fix — calibrating its perception against its own output.",
+   "quote": "I literally can't tell which dot is which net, the corridor red blends with F.Cu tracks... marker size is too small (~10px), and there's no outline so dots disappear into the background."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "57c2f0a4-4ebb-4cd5-84bc-87d8a9a0b2d5",
+   "idx": 62312,
+   "title": "800px hid the bug",
+   "category": "calibration",
+   "note": "User's high-res screenshot reveals traces over labels that Claude's 800px view couldn't show — a vivid lesson that the agent's standard render resolution itself shapes (and limits) what it can perceive.",
+   "quote": "Now I see what you see — the high-res render shows orange tracks clearly visible through some labels and across arrows. The cursor_view.png at 800px was too small to see this."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "5d18b062-b1fb-40a2-a3ee-8e979dec5287",
+   "idx": 62333,
+   "title": "Traces-on-top was a d3 .raise bug",
+   "category": "debugging",
+   "note": "A satisfying root-cause: the SVG splice order was correct all along — a per-update raiseActiveLayer().raise() in the browser was re-stacking layers above annotations. Classic \"the render lies\" debugging.",
+   "quote": "Found the bug! raiseActiveLayer() runs after every WS update and does .raise() on all elements with data-layer=In2.Cu, moving them to the END of zoomG = ON TOP of my annotations."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "7ad28bcc-4338-40e1-994c-b946547e0390",
+   "idx": 63302,
+   "title": "The doughnut-hole fanout rule",
+   "category": "insight",
+   "note": "User says \"there's a rule on how fanout can take\"; Claude derives it from the geometry — only 4 diagonal via slots, blocked by through-board drill clearance from any layer's track — exposing a real blind spot in the tool.",
+   "quote": "every doughnut hole at BA2's endpoints is blocked by some net's diagonal track — through-board drill clearance. NE doughnut (-4,-1.6) has only one blocker (A14's diagonal). That's the cheapest to clear."
+  },
+  {
+   "project": "-Users-en-Developer-layout-engine",
+   "session": "7ba4f33e-6fd1-49a2-99b0-f6b420016302",
+   "uuid": "a7e85da0-9e1f-4d0a-910f-c6059a0fed28",
+   "idx": 66585,
+   "title": "100x speedup: the agent-render tax",
+   "category": "debugging",
+   "note": "A great closing debugging arc — the UI lag was a 3s resvg PNG bake that exists only so the agent can 'look' after every action; a skipView flag for the human path takes it 3.5s to 33ms.",
+   "quote": "100x speedup. Layer change/net select dropped from 3.5s to 33ms... Agent path (no skipView) keeps its /tmp/cursor_view.png bake."
+  }
+ ]
+}
