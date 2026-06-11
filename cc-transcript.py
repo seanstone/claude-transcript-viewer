@@ -20,105 +20,147 @@ PROJECTS_DIR = Path.home() / ".claude" / "projects"
 
 CSS = """
 :root {
-  --bg: #f7f7f5; --fg: #1a1a1a; --muted: #6b6b6b;
-  --user-bg: #e7f0ff; --assistant-bg: #ffffff;
-  --thinking-bg: #f0eaf7; --tool-bg: #fff8e7;
-  --tool-result-bg: #f4f4f2;
-  --code-bg: #2b2b2b; --code-fg: #f5f5f5;
-  --border: #e0e0e0; --accent: #b45309;
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #181818; --fg: #e8e8e8; --muted: #9a9a9a;
-    --user-bg: #1f3556; --assistant-bg: #232323;
-    --thinking-bg: #2c1f3d; --tool-bg: #3d2f0f;
-    --tool-result-bg: #1f1f1f;
-    --code-bg: #0f0f0f; --code-fg: #e8e8e8;
-    --border: #333; --accent: #f59e0b;
-  }
+  --bg: #faf9f5;
+  --surface: #ffffff;
+  --fg: #2c2825;
+  --muted: #8a857c;
+  --accent: #c96442;
+  --accent-soft: #f4ece2;
+  --border: #ece8de;
+  --border-soft: #f1ede3;
+  --user-bg: #f0ebe1;
+  --assistant-bg: transparent;
+  --thinking-bg: #f1ecf5;
+  --thinking-fg: #6b5b86;
+  --tool-bg: #faf3e0;
+  --tool-result-bg: #f5f1ea;
+  --code-bg: #30302e;
+  --code-fg: #f5f1ea;
+  --inline-code-bg: #f0ebe1;
+  --inline-code-fg: #993b1f;
 }
 * { box-sizing: border-box; }
+html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-  margin: 0; padding: 24px 16px;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Söhne",
+    "Inter", "Segoe UI", system-ui, sans-serif;
+  margin: 0; padding: 32px 16px;
   background: var(--bg); color: var(--fg);
-  line-height: 1.55;
+  line-height: 1.6; font-size: 15px;
 }
-.container { max-width: 920px; margin: 0 auto; }
-header { margin-bottom: 24px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
-header h1 { margin: 0 0 4px 0; font-size: 20px; }
-header .meta { color: var(--muted); font-size: 12px; word-break: break-all; }
-.msg { margin: 12px 0; padding: 14px 18px; border-radius: 12px; border: 1px solid var(--border); }
-.msg.user { background: var(--user-bg); }
-.msg.assistant { background: var(--assistant-bg); }
+.container { max-width: 780px; margin: 0 auto; }
+header {
+  margin-bottom: 28px; padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+header h1 {
+  margin: 0 0 6px 0; font-size: 22px; font-weight: 500;
+  font-family: "Copernicus", "Tiempos Headline", Georgia, "Iowan Old Style", serif;
+  letter-spacing: -0.01em; color: var(--fg);
+}
+header .meta {
+  color: var(--muted); font-size: 12.5px; word-break: break-all;
+  font-feature-settings: "tnum";
+}
+.msg { margin: 18px 0; padding: 0; }
+.msg.user {
+  background: var(--user-bg);
+  padding: 14px 18px; border-radius: 14px;
+  margin-left: 12%;
+}
+.msg.assistant { padding: 4px 0; }
 .role {
-  font-weight: 600; font-size: 11px; text-transform: uppercase;
-  color: var(--muted); margin-bottom: 8px; letter-spacing: 0.6px;
+  font-weight: 500; font-size: 11px; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 8px; letter-spacing: 0.7px;
 }
 .role .ts { font-weight: 400; text-transform: none; margin-left: 8px; color: var(--muted); }
-.msg p { margin: 6px 0; }
+.msg p { margin: 8px 0; }
+.msg p:first-child { margin-top: 0; }
+.msg p:last-child { margin-bottom: 0; }
 .msg pre {
   background: var(--code-bg); color: var(--code-fg);
-  padding: 12px; border-radius: 8px; overflow-x: auto;
-  font-size: 12.5px; line-height: 1.5;
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  padding: 14px 16px; border-radius: 10px; overflow-x: auto;
+  font-size: 12.5px; line-height: 1.55;
+  font-family: ui-monospace, SFMono-Regular, "JetBrains Mono", Menlo, monospace;
   white-space: pre-wrap; word-break: break-word;
+  margin: 12px 0;
 }
 .msg :not(pre) > code {
-  background: rgba(0,0,0,0.06); padding: 1px 5px; border-radius: 4px;
-  font-size: 0.92em; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-}
-@media (prefers-color-scheme: dark) {
-  .msg :not(pre) > code { background: rgba(255,255,255,0.08); }
+  background: var(--inline-code-bg); color: var(--inline-code-fg);
+  padding: 1px 6px; border-radius: 5px;
+  font-size: 0.88em;
+  font-family: ui-monospace, SFMono-Regular, "JetBrains Mono", Menlo, monospace;
 }
 details {
-  margin: 8px 0; border: 1px solid var(--border);
-  border-radius: 8px; overflow: hidden;
+  margin: 10px 0; border: 1px solid var(--border);
+  border-radius: 10px; overflow: hidden; background: var(--surface);
 }
 details > summary {
-  padding: 8px 12px; cursor: pointer;
+  padding: 9px 14px; cursor: pointer;
   font-size: 13px; font-weight: 500; user-select: none;
-  list-style: none;
+  list-style: none; color: var(--fg);
+  transition: background 0.12s ease;
 }
 details > summary::-webkit-details-marker { display: none; }
+details > summary:hover { background: var(--border-soft); }
 details[open] > summary { border-bottom: 1px solid var(--border); }
-details > .body { padding: 10px 12px; }
-.thinking { background: var(--thinking-bg); }
-.thinking > summary::before { content: "🧠  "; }
-.tool { background: var(--tool-bg); }
-.tool > summary::before { content: "🔧  "; }
-.tool-result { background: var(--tool-result-bg); margin-top: 8px; }
-.tool-result > summary::before { content: "↳  "; }
+details > .body { padding: 12px 14px; background: var(--surface); }
+.thinking { background: var(--thinking-bg); border-color: #ddd4e8; }
+.thinking > summary { color: var(--thinking-fg); }
+.thinking > summary::before { content: "✦  "; }
+.thinking > .body { background: var(--thinking-bg); color: var(--thinking-fg); }
+.tool { background: var(--tool-bg); border-color: #ecd9a7; }
+.tool > summary::before { content: "▸  "; color: var(--accent); }
+.tool > .body { background: var(--tool-bg); }
+.tool-result {
+  background: var(--tool-result-bg); margin-top: 10px;
+  border-color: var(--border);
+}
+.tool-result > summary::before { content: "↳  "; color: var(--muted); }
+.tool-result > .body { background: var(--tool-result-bg); }
 .tool-name { font-weight: 600; color: var(--accent); }
 .muted { color: var(--muted); font-weight: 400; }
-.attachment { background: var(--tool-result-bg); font-size: 12px; }
-.attachment > summary::before { content: "ⓘ  "; }
+.attachment { background: var(--surface); font-size: 12px; }
+.attachment > summary::before { content: "ⓘ  "; color: var(--muted); }
+.attachment > .body { background: var(--surface); }
 .idx { list-style: none; padding: 0; margin: 0; }
 .idx li {
-  padding: 12px 16px; border: 1px solid var(--border);
-  border-radius: 8px; margin: 8px 0; background: var(--assistant-bg);
+  padding: 14px 18px; border: 1px solid var(--border);
+  border-radius: 12px; margin: 10px 0; background: var(--surface);
+  transition: border-color 0.12s ease, transform 0.12s ease;
 }
+.idx li:hover { border-color: var(--accent); }
 .idx li a { color: var(--fg); text-decoration: none; font-weight: 500; }
 .idx li a:hover { color: var(--accent); }
-.idx .sub { color: var(--muted); font-size: 12px; margin-top: 4px; }
-.stats {
-  display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px;
+.idx .sub {
+  color: var(--muted); font-size: 12px; margin-top: 6px;
+  font-feature-settings: "tnum";
 }
+.idx .sub code {
+  background: var(--accent-soft); color: var(--accent);
+  padding: 1px 5px; border-radius: 4px; font-size: 0.92em;
+}
+.stats { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
 .stat {
-  background: var(--assistant-bg); border: 1px solid var(--border);
-  border-radius: 8px; padding: 8px 14px; min-width: 84px; text-align: center;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 10px; padding: 10px 16px; min-width: 96px; text-align: center;
 }
-.stat-num { font-size: 19px; font-weight: 700; }
+.stat-num {
+  font-size: 20px; font-weight: 600; color: var(--fg);
+  font-feature-settings: "tnum";
+  font-family: "Copernicus", Georgia, "Iowan Old Style", serif;
+}
 .stat-lbl {
   font-size: 10.5px; text-transform: uppercase; color: var(--muted);
-  letter-spacing: 0.5px; margin-top: 2px;
+  letter-spacing: 0.6px; margin-top: 3px;
 }
-.tool-breakdown { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 6px; }
+.tool-breakdown { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 6px; }
 .tool-chip {
-  font-size: 12px; background: var(--tool-bg);
+  font-size: 12px; background: var(--accent-soft); color: var(--fg);
   border: 1px solid var(--border); border-radius: 999px; padding: 3px 10px;
+  font-feature-settings: "tnum";
 }
-.tool-chip b { color: var(--accent); }
+.tool-chip b { color: var(--accent); font-weight: 600; }
 """
 
 
@@ -312,11 +354,57 @@ def parse_jsonl(path):
 
 
 def first_user_prompt(events):
+    """First real user prompt — skips slash-command shells like <local-command-caveat>."""
     for ev in events:
-        if ev.get("type") == "user":
-            c = ev.get("message", {}).get("content")
-            if isinstance(c, str) and c.strip():
-                return c.strip()
+        if ev.get("type") != "user":
+            continue
+        c = ev.get("message", {}).get("content")
+        if not isinstance(c, str):
+            continue
+        s = c.strip()
+        if not s:
+            continue
+        if s.startswith("<local-command-") or s.startswith("<command-"):
+            continue
+        return s
+    return ""
+
+
+def session_title(events, project_dir_name=""):
+    """Return the session's display name.
+
+    Priority: aiTitle (auto-generated descriptive title shown in /resume)
+              -> customTitle (skip if it just mirrors the project folder name)
+              -> first user prompt
+    Uses the LAST occurrence of each title event, since they may be rewritten.
+    """
+    ai_title = ""
+    custom_title = ""
+    for ev in events:
+        t = ev.get("type")
+        if t == "ai-title":
+            v = ev.get("aiTitle")
+            if isinstance(v, str) and v.strip():
+                ai_title = v.strip()
+        elif t == "custom-title":
+            v = ev.get("customTitle")
+            if isinstance(v, str) and v.strip():
+                custom_title = v.strip()
+    if ai_title:
+        return ai_title
+    # Skip customTitle when it's just (or contains) the project folder name —
+    # Claude Code defaults to it, and cwd may change mid-session so basename
+    # equality is unreliable. Substring of the encoded project dir works for
+    # dashed names like "claude-transcript-viewer", "lora-rs", etc.
+    if custom_title and len(custom_title) >= 4:
+        proj_key = project_dir_name.lower()
+        if custom_title.lower() in proj_key:
+            custom_title = ""
+    if custom_title:
+        return custom_title
+    first = first_user_prompt(events)
+    if first:
+        return first[:80] + ("…" if len(first) > 80 else "")
     return ""
 
 
@@ -424,7 +512,7 @@ def render_stats(s):
     return f'<div class="stats">{"".join(cards)}</div>{breakdown}'
 
 
-def render_html(events, title, show_attachments=False):
+def render_html(events, title, show_attachments=False, project_dir_name=""):
     tool_results = {}
     for ev in events:
         if ev.get("type") == "user":
@@ -442,12 +530,11 @@ def render_html(events, title, show_attachments=False):
         if chunk:
             body_parts.append(chunk)
 
-    first = first_user_prompt(events)
     cwd = next((ev["cwd"] for ev in events if ev.get("cwd")), "")
     sid = next((ev["sessionId"] for ev in events if ev.get("sessionId")), "")
     started = next((fmt_ts(ev["timestamp"], full=True) for ev in events if ev.get("timestamp")), "")
 
-    title_text = (first[:80] + ("…" if len(first) > 80 else "")) if first else title
+    title_text = session_title(events, project_dir_name) or title
     stats_html = render_stats(compute_stats(events))
 
     return f"""<!doctype html>
@@ -600,12 +687,14 @@ def cmd_render_all(out_dir, show_attachments=False):
             continue
         if not events:
             continue
-        out_html = render_html(events, r["session"], show_attachments=show_attachments)
+        title = session_title(events, r["project"]) or r["session"]
+        out_html = render_html(events, r["session"], show_attachments=show_attachments,
+                               project_dir_name=r["project"])
         sub = out / r["project"]
         sub.mkdir(exist_ok=True)
         outfile = sub / f"{r['session']}.html"
         outfile.write_text(out_html, encoding="utf-8")
-        items.append((r, first_user_prompt(events), outfile.relative_to(out)))
+        items.append((r, title, outfile.relative_to(out)))
         try:
             t = count_tokens_stream(r["path"])
             for k in agg_total:
@@ -614,12 +703,11 @@ def cmd_render_all(out_dir, show_attachments=False):
             pass
 
     items_html = []
-    for r, first, rel in items:
-        title = (first[:120] + ("…" if len(first) > 120 else "")) if first else r["session"]
+    for r, title, rel in items:
         items_html.append(
             f'<li><a href="{esc(str(rel))}">{esc(title)}</a>'
             f'<div class="sub">{esc(r["project"])} · {r["mtime"]:%Y-%m-%d %H:%M} · {r["size"]:,} bytes · '
-            f'<code>{esc(r["session"])}</code></div></li>'
+            f'<code>{esc(r["session"][:8])}</code></div></li>'
         )
     index_html = f"""<!doctype html>
 <html lang="en"><head>
